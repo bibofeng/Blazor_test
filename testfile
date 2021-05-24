@@ -1,0 +1,147 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Radzen;
+using Radzen.Blazor;
+
+
+/**
+ -- Home.razor.cs
+ using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Radzen;
+using Radzen.Blazor;
+
+namespace ComputedNumber.Pages
+{
+    public partial class HomeComponent
+    {
+
+    }
+}
+
+Home.razor.designer.cs
+ */
+
+namespace ComputedNumber.Pages
+{
+    public partial class HomeComponent : ComponentBase
+    {
+        [Parameter(CaptureUnmatchedValues = true)]
+        public IReadOnlyDictionary<string, dynamic> Attributes { get; set; }
+
+        public void Reload()
+        {
+            InvokeAsync(StateHasChanged);
+        }
+
+        public void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+
+        }
+
+        [Inject]
+        protected IJSRuntime JSRuntime { get; set; }
+
+        [Inject]
+        protected NavigationManager UriHelper { get; set; }
+
+        [Inject]
+        protected DialogService DialogService { get; set; }
+
+        [Inject]
+        protected TooltipService TooltipService { get; set; }
+
+        [Inject]
+        protected ContextMenuService ContextMenuService { get; set; }
+
+        [Inject]
+        protected NotificationService NotificationService { get; set; }
+
+        double _NominalAmount;
+        protected double NominalAmount
+        {
+            get
+            {
+                return _NominalAmount;
+            }
+            set
+            {
+                if (!object.Equals(_NominalAmount, value))
+                {
+                    var args = new PropertyChangedEventArgs(){ Name = "NominalAmount", NewValue = value, OldValue = _NominalAmount };
+                    _NominalAmount = value;
+                    OnPropertyChanged(args);
+                    Reload();
+                }
+            }
+        }
+
+        double _Volume;
+        protected double Volume
+        {
+            get
+            {
+                return _Volume;
+            }
+            set
+            {
+                if (!object.Equals(_Volume, value))
+                {
+                    var args = new PropertyChangedEventArgs(){ Name = "Volume", NewValue = value, OldValue = _Volume };
+                    _Volume = value;
+                    OnPropertyChanged(args);
+                    Reload();
+                }
+            }
+        }
+
+        double _UnitPrice;
+        protected double UnitPrice
+        {
+            get
+            {
+                return _UnitPrice;
+            }
+            set
+            {
+                if (!object.Equals(_UnitPrice, value))
+                {
+                    var args = new PropertyChangedEventArgs(){ Name = "UnitPrice", NewValue = value, OldValue = _UnitPrice };
+                    _UnitPrice = value;
+                    OnPropertyChanged(args);
+                    Reload();
+                }
+            }
+        }
+
+        protected override async System.Threading.Tasks.Task OnInitializedAsync()
+        {
+            await Load();
+        }
+        protected async System.Threading.Tasks.Task Load()
+        {
+            NominalAmount = 3100000;
+
+            Volume = 750000;
+
+            UnitPrice = NominalAmount / Volume;
+        }
+
+        protected async System.Threading.Tasks.Task Numeric0Change(double args)
+        {
+            UnitPrice = NominalAmount / Volume;
+        }
+
+        protected async System.Threading.Tasks.Task Numeric1Change(double args)
+        {
+            UnitPrice = NominalAmount / Volume;
+        }
+    }
+}
